@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
 })
 
 
+app.get('/hi', (req, res) => {
+    res.send('Hi World!');
+})
+
+
+
 // Connect to MongoDB
 // DONT MISUSE THIS THANKYOU!!
 // mongoose.connect('mongodb://localhost:27017/courses', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
