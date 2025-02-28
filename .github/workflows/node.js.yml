@@ -5,32 +5,28 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
-    runs-on: self-hosted 
-
-    strategy: 
-      matrix:
-        node-version: [20.16.0]
+  deploy:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Create PEM file
+    - name: Create SSH Key
       run: |
-        echo "${{ secrets.PRIVATE_KEY }}" > ~/actions-runner/_work/week-9/week-9/server/private-key.pem
-        chmod 600 ~/actions-runner/_work/week-9/week-9/server/private-key.pem  # Set secure permissions
+        echo "${{ secrets.EC2_SSH_KEY }}" > sampleAppKey-1.pem
+        chmod 600 sampleAppKey-1.pem
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+    - name: Add EC2 to Known Hosts
+      run: |
+        ssh-keyscan -H ec2-3-84-55-152.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
-    - name: Install Dependencies
-      run: npm ci
-      working-directory: ~/actions-runner/_work/week-9/week-9/server
-
-    - name: Restart Application
-      run: pm2 restart index
+    - name: SSH into EC2 and Deploy
+      run: |
+        ssh -i sampleAppKey-1.pem -o StrictHostKeyChecking=no ubuntu@ec2-3-84-55-152.compute-1.amazonaws.com << 'EOF'
+          cd /home/ubuntu/actions-runner/_work/week-9/week-9
+          git pull origin master
+          cd server
+          npm install
+          pm2 restart index
+        EOF
