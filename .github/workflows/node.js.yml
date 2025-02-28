@@ -19,6 +19,7 @@ jobs:
 
     - name: Add EC2 to Known Hosts
       run: |
+        mkdir -p ~/.ssh
         ssh-keyscan -H ec2-3-84-55-152.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
     - name: SSH into EC2 and Deploy
