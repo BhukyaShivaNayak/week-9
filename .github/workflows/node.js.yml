@@ -14,12 +14,13 @@ jobs:
         node-version: [20.16.0]
 
     steps:
-    - name: Connect to the server and pull latest changes
-      run: |
-        cd ~/actions-runner/_work/week-9/week-9  # Change to your project directory
-        git pull origin master  # Pull latest changes from master branch
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-    - uses: actions/checkout@v4
+    - name: Create PEM file
+      run: |
+        echo "${{ secrets.PRIVATE_KEY }}" > ~/actions-runner/_work/week-9/week-9/server/private-key.pem
+        chmod 600 ~/actions-runner/_work/week-9/week-9/server/private-key.pem  # Set secure permissions
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
@@ -29,8 +30,7 @@ jobs:
 
     - name: Install Dependencies
       run: npm ci
-      working-directory: ~/actions-runner/_work/week-9/week-9/server  # Change directory automatically
+      working-directory: ~/actions-runner/_work/week-9/week-9/server
 
     - name: Restart Application
       run: pm2 restart index
-
