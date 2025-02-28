@@ -25,9 +25,14 @@ jobs:
     - name: SSH into EC2 and Deploy
       run: |
         ssh -i sampleAppKey-1.pem -o StrictHostKeyChecking=no ubuntu@ec2-3-84-55-152.compute-1.amazonaws.com << 'EOF'
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+          
           cd /home/ubuntu/actions-runner/_work/week-9/week-9
           git pull origin master
           cd server
           npm install
           pm2 restart index
         EOF
+
