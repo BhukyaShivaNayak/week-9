@@ -22,6 +22,10 @@ app.get('/hi', (req, res) => {
 })
 
 
+app.get('/shiva', (req, res) => {
+    res.send('shivaaaaa!');
+})
+
 
 // Connect to MongoDB
 // DONT MISUSE THIS THANKYOU!!
