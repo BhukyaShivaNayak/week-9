@@ -16,7 +16,7 @@ app.use("/user", userRouter)
 
 app.get('/hi', (req, res) => { res.send('Hi World!') });
 
-app.get('/not', (req, res) => { res.send('what World!') });
+app.get('/not', (req, res) => { res.send('not is the response') });
 
 // Connect to MongoDB
 // DONT MISUSE THIS THANKYOU!!
