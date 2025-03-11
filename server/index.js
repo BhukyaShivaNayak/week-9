@@ -16,7 +16,7 @@ app.get('/', (req, res) => { res.send('Hello World!') });
 
 app.get('/hi', (req, res) => { res.send('Hi World!') });
 
-
+app.get('/what', (req, res) => { res.send('what World!') });
 
 // Connect to MongoDB
 // DONT MISUSE THIS THANKYOU!!
