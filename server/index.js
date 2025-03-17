@@ -18,6 +18,9 @@ app.get('/', (req, res) => { res.send('Hi World!') });
 
 app.get('/not', (req, res) => { res.send('nothing is the response') });
 
+app.get('/every', (req, res) => { res.send('every is the response') });
+
+
 // Connect to MongoDB
 // DONT MISUSE THIS THANKYOU!!
 // mongoose.connect('mongodb://localhost:27017/courses', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
